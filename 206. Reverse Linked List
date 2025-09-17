@@ -1,0 +1,32 @@
+// correct
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+       ListNode  dummy_node;
+       ListNode *dummy_head = &dummy_node;
+       stack<ListNode*> node_stack;
+       ListNode *iter;
+       ListNode *cur;
+       if (!head || !head->next)
+         return head;
+
+        iter = head;
+        while (iter != nullptr)
+        {
+          node_stack.push(iter);  //
+          iter = iter->next;
+        }
+
+        cur = dummy_head;
+        //while (iter != nullptr) 错误的, iter 不能未空
+        while(!node_stack.empty())
+        {
+           iter = node_stack.top();
+           node_stack.pop();
+           cur->next=iter;
+           cur = cur->next;
+           cur->next = nullptr;
+        }
+        return dummy_head->next;
+    }
+};
