@@ -1,0 +1,50 @@
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+       ListNode dummy_node;
+       ListNode *dummy_head = &dummy_node;
+       stack<ListNode*> node_stack;
+       ListNode *iter;
+       ListNode *pre;
+       ListNode *cur;
+       int nodecnt = 0;
+       if (!head || !head->next)
+         return head;
+
+        // insert the tail dummy head
+        iter=head->next;
+        while (iter->next != nullptr)
+        {
+          iter = iter->next;
+        }
+        iter->next = dummy_head;
+        dummy_head->next = nullptr;
+
+        // detach and attach new node to do reverse
+        cur = dummy_head;
+        while (head->next != dummy_head)
+        {
+          pre  = head;
+          iter = head->next;
+          while (iter->next != dummy_head)
+          {
+            pre  = iter;
+            iter = iter->next;
+          }
+          // pre operation in order to detach current one
+          pre->next = dummy_head;
+
+          // attach to dummy_head or cur tail
+          cur->next = iter;
+
+          // update the current tail node
+          cur = iter;
+          cur->next= nullptr;
+        }
+
+        // update head after reversing
+        head->next = dummy_head->next;
+
+        return head;
+    }
+};
